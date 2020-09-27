@@ -32,18 +32,19 @@
 <body>
     <?php
     session_start(); 
-    if(isset($_SESSION['cliente'])){
+    if(isset($_SESSION['usuario'])){
 
     }else{
         header("location: ./area-clientes.php");
     }
     require("../conexion.php");
-    $dnimi = $_SESSION['cliente'];
-    $sql = "SELECT * FROM clientes WHERE dni LIKE '$dnimi'";
+    $dnimi = $_SESSION['usuario'];
+    $sql = "SELECT * FROM usuarios WHERE username LIKE '$dnimi'";
     $resultado = mysqli_query($conexion, $sql);
     if(mysqli_affected_rows($conexion)>0){
         while($fila = mysqli_fetch_array($resultado, MYSQLI_ASSOC)){
             $banmi = $fila['banned'];
+            $rango = $fila['rango'];
         }
     }else{
         echo '<h3 align="center"><i class="far fa-smile-beam"></i>&nbsp;No tienes notificaciones, estas al día&nbsp;<i class="far fa-smile-beam"></i></h3>';
@@ -52,9 +53,17 @@
     if($banmi != 0){
         header("../area-clientes.php");exit;
     }
+    $contador = 0;
+    $sql = "SELECT * FROM notificaciones WHERE receptor LIKE 'Asier Bank' and readed='0'";
+    $resultado = mysqli_query($conexion, $sql);
+    if(mysqli_affected_rows($conexion)>0){
+        while($fila = mysqli_fetch_array($resultado, MYSQLI_ASSOC)){
+            $contador++;
+        }
+    }
 require("./navbar.php");
 echo '<h3 align="center">Consultar todas tus Notificaciones</h3><hr>';
-    $sql = "SELECT * FROM notificaciones WHERE receptor LIKE '$dnimi'";
+    $sql = "SELECT * FROM notificaciones WHERE receptor LIKE 'Asier Bank'";
     $resultado = mysqli_query($conexion, $sql);
     if(mysqli_affected_rows($conexion)>0){
         echo '   <table>
@@ -68,13 +77,12 @@ echo '<h3 align="center">Consultar todas tus Notificaciones</h3><hr>';
 
         <tbody>';
         while($fila = mysqli_fetch_array($resultado, MYSQLI_ASSOC)){
-            if($fila['emisor'] == 'Asier Bank'){
+            if($rango < 3){
                 $emisario = $fila['emisor'];
                 echo '<tr>
                 <td>' . $emisario . '</td>
                 <td>' . $fila['fecha'] . '</td>
                 <td>' . $fila['texto'] . '
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: green;"class="tooltipped" data-position="top" data-tooltip="¡Usuario Verificado!"><i class="far fa-check-circle fa-3x"></i></a></td>
               </tr>';
             }else{
                 $bademi = $fila['emisor'];
@@ -83,7 +91,7 @@ echo '<h3 align="center">Consultar todas tus Notificaciones</h3><hr>';
                 <td>' . $emisario . '*****</td>
                 <td>' . $fila['fecha'] . '</td>
                 <td>' . $fila['texto'] . '
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: red;"class="tooltipped" data-position="top" data-tooltip="Usuario no Verificado"><i class="far fa-times-circle fa-3x"></i></a></td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
                 <td><form method="post"> <button type="SUBMIT" class="btn-floating btn-large waves-effect waves-light red" id="smit6575" name="smit6575"><i class="fas fa-trash-alt"></i></button></td>
                 <input type="hidden" value="' . $fila['id_db'] . '" id="supadi" name="supadi"> 
               </tr>';
