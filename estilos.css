@@ -1,0 +1,89 @@
+.black-back {
+    background: grey;
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type=”number”]
+{
+-webkit-appearance: textfield !important;
+margin: 0;
+-moz-appearance:textfield !important;
+}
+input[type="number"] {
+-moz-appearance: textfield;
+}
+input[type="number"]:hover,
+input[type="number"]:focus {
+-moz-appearance: number-input;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+.caja{
+    border: black 3px solid;
+}
+
+.centerf{
+    align-content: space-between;
+}
+
+
+.margenin{
+    margin: 0 25em;
+    width: 100%;
+}
+
+.registrorio{
+    width: 100%;
+}
+
+.selectado{
+    color: hotpink;
+}
+
+.whiteso{
+    color: white;
+}
+
+.salmonete{
+    background: #ff3827;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.salmonetes{
+    background: #3b83bd;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+} 
+
+.whitesuck:active{
+    background: white;
+}
+
+.link{
+    color: #00dac3;
+}
+.link:hover{
+    color: #00c6b1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.legalto {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
